@@ -1,8 +1,9 @@
 package com.tkh.tech.currencyconverter.currency_conversion_feature.di
 
-import com.tkh.tech.currencyconverter.core.util.Constants
 import com.tkh.tech.currencyconverter.core.util.Constants.Companion.BASE_URL
-import com.tkh.tech.currencyconverter.currency_conversion_feature.data.remote.CurrencyConverterApi
+import com.tkh.tech.currencyconverter.currency_conversion_feature.data.remote.ConverterApi
+import com.tkh.tech.currencyconverter.currency_conversion_feature.data.repository.ConverterrepositoryImpl
+import com.tkh.tech.currencyconverter.currency_conversion_feature.domain.repository.ConverterRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -16,7 +17,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(ViewModelComponent::class)
-object CurrencyConverterModule {
+object ConverterModule {
 
     @Singleton
     @Provides
@@ -33,7 +34,7 @@ object CurrencyConverterModule {
 
     @Provides
     @Singleton
-    fun provideCurrencyConverterApi(okHttpClient: OkHttpClient): CurrencyConverterApi {
+    fun provideCurrencyConverterApi(okHttpClient: OkHttpClient): ConverterApi {
 
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
@@ -43,5 +44,13 @@ object CurrencyConverterModule {
             .create()
     }
 
-
+    @Provides
+    @Singleton
+    fun providesConverterRepository(api: ConverterApi): ConverterRepository {
+        return ConverterrepositoryImpl(
+            api = api
+        )
+    }
 }
+
+

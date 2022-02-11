@@ -11,9 +11,8 @@ class RatesConversion {
         rate: RatesDto
     ): Double {
 
-        val conversionrate = getCurrencyRate(toCurrency, rate)
-        val convertedCurrency = round(amount * conversionrate * 100) / 100
-        return convertedCurrency
+        val conversionRate = getCurrencyRate(toCurrency, rate)
+        return round(amount * conversionRate * 100) / 100
 
     }
 
