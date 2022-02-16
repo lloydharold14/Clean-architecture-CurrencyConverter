@@ -3,7 +3,7 @@ package com.tkh.tech.currencyconverter.currency_conversion_feature.domain.use_ca
 import com.tkh.tech.currencyconverter.currency_conversion_feature.data.remote.dto.RatesDto
 import kotlin.math.round
 
-class RatesConversion {
+class CalculateRate {
 
     operator fun invoke(
         amount: Double,

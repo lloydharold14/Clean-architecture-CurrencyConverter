@@ -2,8 +2,10 @@ package com.tkh.tech.currencyconverter.currency_conversion_feature.di
 
 import com.tkh.tech.currencyconverter.core.util.Constants.Companion.BASE_URL
 import com.tkh.tech.currencyconverter.currency_conversion_feature.data.remote.ConverterApi
-import com.tkh.tech.currencyconverter.currency_conversion_feature.data.repository.ConverterrepositoryImpl
+import com.tkh.tech.currencyconverter.currency_conversion_feature.data.repository.ConverterRepositoryImpl
 import com.tkh.tech.currencyconverter.currency_conversion_feature.domain.repository.ConverterRepository
+import com.tkh.tech.currencyconverter.currency_conversion_feature.domain.use_case.CalculateRate
+import com.tkh.tech.currencyconverter.currency_conversion_feature.domain.use_case.GetCurrencyCode
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,9 +49,27 @@ object ConverterModule {
     @Provides
     @Singleton
     fun providesConverterRepository(api: ConverterApi): ConverterRepository {
-        return ConverterrepositoryImpl(
+        return ConverterRepositoryImpl(
             api = api
         )
+    }
+
+    @Provides
+    @Singleton
+    fun providesRateCalculation(
+
+    ): CalculateRate {
+
+        return CalculateRate()
+    }
+
+    @Provides
+    @Singleton
+    fun providesCurrencyCode(
+
+    ): GetCurrencyCode {
+
+        return GetCurrencyCode()
     }
 }
 

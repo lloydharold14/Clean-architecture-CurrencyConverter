@@ -9,29 +9,21 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import okio.IOException
 import retrofit2.HttpException
+import java.lang.Exception
 
-class ConverterrepositoryImpl(
+class ConverterRepositoryImpl(
     private val api: ConverterApi
 ) : ConverterRepository {
-    override fun getCurrenciesRates(base: String): Flow<Resource<CurrenciesDto>> = flow {
-        emit(Resource.Loading())
+    override suspend fun getCurrenciesRates(base: String): Result<CurrenciesDto> {
 
-        try {
-            val currencyResponse = api.getLatestConversion(API_KEY, base)
-            emit(Resource.Success(currencyResponse))
+        return try {
+            val currency = api.getLatestConversion(API_KEY, base)
+            Result.success(currency)
 
-        } catch (e: HttpException) {
-            emit(
-                Resource.Error(
-                    e.message()
-                )
-            )
-        } catch (e: IOException) {
-            emit(
-                Resource.Error(
-                    "Couldn't reach server, check your internet connection!",
-                )
-            )
+        } catch (e: Exception) {
+
+            e.printStackTrace()
+            Result.failure(e)
         }
 
 
